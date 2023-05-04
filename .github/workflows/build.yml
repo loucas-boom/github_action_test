@@ -7,7 +7,7 @@ jobs:
     - name: Installation depends
       run: |
         sudo apt-get update
-        sudo apt-get -y binutils bzip2 diff find flex gawk gcc-6+ getopt grep install libc-dev libz-dev make4.1+ perl python3.6+ rsync subversion unzip which
+        sudo apt-get -y binutils
     - name: Clone source code
       run: |
         git clone https://github.com/openwrt/openwrt
