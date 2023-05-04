@@ -1,6 +1,5 @@
 name: Hello World
-  watch:
-    types: [started]
+on: push
 jobs:
   my_first_job:
     name: My first job
@@ -17,7 +16,7 @@ jobs:
     - name: Run a multi-line script
       env:
         MY_VAR: Hello World!
-        MY_NAME: Loucas
+        MY_NAME: LOUCAS
       run: |
         echo $MY_VAR
         echo My name is $MY_NAME
