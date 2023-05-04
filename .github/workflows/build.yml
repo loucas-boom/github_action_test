@@ -4,10 +4,6 @@ jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
-    - name: Installation depends
-      run: |
-        sudo -E apt update
-        sudo -E apt -y binutils bzip2 diff find flex gawk gcc-6+ getopt grep install libc-dev libz-dev make4.1+ perl python3.6+ rsync subversion unzip which
     - name: Clone source code
       run: |
         git clone https://github.com/openwrt/openwrt
