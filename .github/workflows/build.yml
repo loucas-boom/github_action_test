@@ -7,7 +7,7 @@ jobs:
     - name: Installation depends
       run: |
         sudo apt-get update
-        sudo apt-get -y binutils
+        sudo apt-get -y vim
     - name: Clone source code
       run: |
         git clone https://github.com/openwrt/openwrt
