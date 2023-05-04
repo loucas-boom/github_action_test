@@ -6,8 +6,8 @@ jobs:
     steps:
     - name: Installation depends
       run: |
-        sudo apt-get update
-        sudo apt-get -y vim
+        sudo -E apt-get update
+        sudo -E apt-get -y vim
     - name: Clone source code
       run: |
         git clone https://github.com/openwrt/openwrt
