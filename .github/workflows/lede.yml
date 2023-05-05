@@ -45,6 +45,7 @@ jobs:
           echo "-------------分割线-------------"
           echo "自定义配置文件"
           cat $GITHUB_WORKSPACE/$CONFIG_FILE
+          echo -e "\n"
           echo "-------------分割线-------------"
           [ -e $GITHUB_WORKSPACE/$CONFIG_FILE ] && mv $CONFIG_FILE lede/.config
     - name: Download package
