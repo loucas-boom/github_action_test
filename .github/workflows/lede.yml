@@ -17,12 +17,12 @@ jobs:
        cat /proc/cpuinfo
        echo "--------------------------"
        cat /proc/meminfo
-    - name: Load custom configuration(Test)
-      run: |
-           ls
-           echo "-------------分割线-------------"
-           echo -e $CONFIG_FILE
-           cat $GITHUB_WORKSPACE/$CONFIG_FILE
+    # - name: Load custom configuration(Test)
+    #   run: |
+    #        ls
+    #        echo "-------------分割线-------------"
+    #        echo -e $CONFIG_FILE
+    #        cat $GITHUB_WORKSPACE/$CONFIG_FILE
     - name: Installation depends
       run: |
        sudo -E apt update
@@ -42,8 +42,11 @@ jobs:
           ls
           echo "-------------分割线-------------"
           echo -e $CONFIG_FILE
+          echo "-------------分割线-------------"
+          echo "自定义配置文件"
           cat $GITHUB_WORKSPACE/$CONFIG_FILE
-          [ -e $CONFIG_FILE ] && mv $CONFIG_FILE lede/.config
+          echo "-------------分割线-------------"
+          [ -e $GITHUB_WORKSPACE/$CONFIG_FILE ] && mv $CONFIG_FILE lede/.config
     - name: Download package
       run: |
         cd lede && make download -j8
