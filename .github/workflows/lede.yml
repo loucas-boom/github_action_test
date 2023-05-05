@@ -33,6 +33,8 @@ jobs:
       run: |
           ls
           echo "-------------分割线-------------"
+          echo -e $CONFIG_FILE
+          [ -e $CONFIG_FILE ] && echo "文件存在"
           [ -e $CONFIG_FILE ] && mv $CONFIG_FILE lede/.config
     - name: Download package
       run: |
