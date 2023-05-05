@@ -31,7 +31,6 @@ jobs:
         ./scripts/feeds install -a
     - name: Load custom configuration
       run: |
-          [ -e files ] && mv files lede/files
           [ -e $CONFIG_FILE ] && mv $CONFIG_FILE lede/.config
     - name: Download package
       run: |
