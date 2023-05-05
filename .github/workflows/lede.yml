@@ -31,6 +31,8 @@ jobs:
         ./scripts/feeds install -a
     - name: Load custom configuration
       run: |
+          ls
+          echo "-------------分割线-------------"
           [ -e $CONFIG_FILE ] && mv $CONFIG_FILE lede/.config
     - name: Download package
       run: |
