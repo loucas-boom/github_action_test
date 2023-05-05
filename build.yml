@@ -1,26 +1,9 @@
-name: Build lede
+name: Build OpenWrt
 on: push
-env:
-  REPO_URL: https://github.com/coolsnowwolf/lede
-  CONFIG_FILE: .config
-  TZ: Asia/Shanghai
 jobs:
   build:
     runs-on: ubuntu-22.04
     steps:
-    - name: Show Machine Info
-      run: |
-       df -hT
-       lscpu
-       cat /proc/cpuinfo
-       echo "--------------------------"
-       cat /proc/meminfo
-    - name: Load custom configuration(Test)
-      run: |
-           ls
-           echo "-------------分割线-------------"
-           echo -e $CONFIG_FILE
-           cat $GITHUB_WORKSPACE/$CONFIG_FILE
     - name: Installation depends
       run: |
        sudo -E apt update
@@ -31,29 +14,21 @@ jobs:
        sudo -E timedatectl set-timezone "Asia/Shanghai"
     - name: Clone source code
       run: |
-        git clone $REPO_URL
-        cd lede
+        git clone https://github.com/openwrt/openwrt
+        cd openwrt
         ./scripts/feeds update -a
         ./scripts/feeds install -a
-    - name: Load custom configuration
+    - name: Generate config file
       run: |
-          ls
-          echo "-------------分割线-------------"
-          echo -e $CONFIG_FILE
-          cat $GITHUB_WORKSPACE/$CONFIG_FILE
-          [ -e $CONFIG_FILE ] && mv $CONFIG_FILE lede/.config
+        cd openwrt
+        make defconfig
     - name: Download package
       run: |
-        cd lede && make download -j8
+        cd openwrt && make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
-    - name: Build
-      run: |
-        cd lede
-        echo -e $(nproc)
-        make -j$(nproc)
     - name : Upload artifact
       uses: actions/upload-artifact@master
       with:
-        name: lede
-        path: lede
+        name: OpenWrt
+        path: openwrt
