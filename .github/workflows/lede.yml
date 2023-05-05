@@ -49,7 +49,9 @@ jobs:
           [ -e $GITHUB_WORKSPACE/$CONFIG_FILE ] && mv $CONFIG_FILE lede/.config
     - name: Download package
       run: |
-        cd lede && make download -j8
+        cd lede 
+        make defconfig
+        make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
     - name: Build
@@ -61,4 +63,4 @@ jobs:
       uses: actions/upload-artifact@master
       with:
         name: lede
-        path: lede/bin
+        path: lede
