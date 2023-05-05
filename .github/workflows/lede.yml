@@ -61,4 +61,4 @@ jobs:
       uses: actions/upload-artifact@master
       with:
         name: lede
-        path: lede
+        path: lede/bin
