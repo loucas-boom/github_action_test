@@ -59,7 +59,7 @@ jobs:
       run: |
         cd lede
         echo -e $(nproc)
-        make -j1 V=s
+        make -j$(nproc) V=s
     - name: Archive
       run:  |
         cd lede
