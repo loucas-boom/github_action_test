@@ -1,8 +1,5 @@
 name: Build lede
-on: 
- issues:
-    types: [labeled]
-    if: "contains(issue.labels.*, 'label-name')"
+on: push
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   CONFIG_FILE: .config
