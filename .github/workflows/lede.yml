@@ -60,8 +60,12 @@ jobs:
         cd lede
         echo -e $(nproc)
         make -j1 V=s
+    - name: Archive
+      run:  |
+        cd lede
+        tar -zcvf lede.tar.gz ./*
     - name : Upload artifact
       uses: actions/upload-artifact@master
       with:
         name: lede
-        path: lede
+        path: lede/lede.tar.gz
