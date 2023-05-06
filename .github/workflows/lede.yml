@@ -1,8 +1,8 @@
 name: Build lede
 # 当新建或者修改 issues 时，触发当前 workflow
 on:
-    issues:
-      types: [opened, edited]
+  issues:
+    types: [opened, edited]
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   CONFIG_FILE: .config
@@ -14,18 +14,16 @@ jobs:
     - name: Checkout
       uses: actions/checkout@main
     - name: Check Issue Label
+      if: ${{ contains(github.event.issue.labels.*.name, 'build') }}
       run: |
-        # 检查 Issue 是否包含指定的标签
-        # 如果不包含，则添加标签并反写 Issue
-        if ! grep -q 'bulid' $GITHUB_EVENT_PATH; then
           # 添加标签
-          echo "Adding label 'bulid' to Issue"
+          echo "Adding label 'build' to Issue"
           curl \
             -X POST \
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels \
-            -d '["bulid"]'
+            -d '["build"]'
           # 反写 Issue
           echo "Updating Issue description"
           curl \
@@ -33,10 +31,8 @@ jobs:
             -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }} \
-            -d '{"body": "Issue does not have the 'bulid' label"}'
+            -d '{"body": "Issue does not have the 'build' label"}'
           exit 1
-        fi
-        echo "Issue has the 'bulid' label"
     - name: Show Machine Info
       run: |
        df -hT
