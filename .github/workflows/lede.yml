@@ -14,25 +14,26 @@ jobs:
     - name: Checkout
       uses: actions/checkout@main
     - name: Check Issue Label
-      if: ${{ !contains(github.event.issue.labels.*.name, 'build') }}
-      run: |
-          # 添加标签
-          echo "Adding label 'build' to Issue"
-          curl \
-            -X POST \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels \
-            -d '["build"]'
-          # 反写 Issue
-          echo "Updating Issue description"
-          curl \
-            -X PATCH \
-            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }} \
-            -d '{"body": "Issue does not have the 'build' label"}'
-          exit 1
+      run: echo ${{github.event.issue}}
+      # if: ${{ !contains(github.event.issue.labels.*.name, 'build') }}
+      # run: |
+      #     # 添加标签
+      #     echo "Adding label 'build' to Issue"
+      #     curl \
+      #       -X POST \
+      #       -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+      #       -H "Accept: application/vnd.github.v3+json" \
+      #       https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/labels \
+      #       -d '["build"]'
+      #     # 反写 Issue
+      #     echo "Updating Issue description"
+      #     curl \
+      #       -X PATCH \
+      #       -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+      #       -H "Accept: application/vnd.github.v3+json" \
+      #       https://api.github.com/repos/${{ github.repository }}/issues/${{ github.event.issue.number }} \
+      #       -d '{"body": "Issue does not have the 'build' label"}'
+      #     exit 1
     - name: Show Machine Info
       run: |
        df -hT
