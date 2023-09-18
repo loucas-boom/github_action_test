@@ -15,7 +15,7 @@ jobs:
       uses: actions/checkout@main
     - name: Check Issue Label
       # run: echo ${{ !contains(github.event.issue.labels.*.name, 'build') }}
-      if: ${{ !contains(github.event.issue.labels.*.name, 'build') }}
+      if: ${{ !contains(github.event.issue.title, 'build') }}
       run: |
           # 添加标签
           echo "Adding label 'build' to Issue"
