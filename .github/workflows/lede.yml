@@ -93,7 +93,7 @@ jobs:
     #     cd lede
     #     tar -zcvf lede.tar.gz ./*
     # - name : Upload artifact
-      uses: actions/upload-artifact@master
-      with:
-        name: lede
-        path: lede/lede.tar.gz
+      # uses: actions/upload-artifact@master
+      # with:
+      #   name: lede
+      #   path: lede/lede.tar.gz
