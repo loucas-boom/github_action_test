@@ -5,7 +5,7 @@ on:
     types: [opened, edited]
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
-  CONFIG_FILE: .config
+  CONFIG_FILE: .config-all
   TZ: Asia/Shanghai
 jobs:
   build:
@@ -80,12 +80,19 @@ jobs:
         make download -j8
         find dl -size -1024c -exec ls -l {} \;
         find dl -size -1024c -exec rm -f {} \;
-    - name: Build
+    - name: Check package
       run: |
         cd lede
-        echo -e $(nproc)
-        make -j$(nproc) || make -j1 || make -j1 V=s
-        echo "::set-output name=status::success"
+        find dl -size -1024c -exec ls -l {} \;
+        find dl -size -1024c -exec rm -f {} \;
+        make download -j8
+    # 暂时取消构建
+    # - name: Build
+    #   run: |
+    #     cd lede
+    #     echo -e $(nproc)
+    #     make -j$(nproc) || make -j1 || make -j1 V=s
+    #     echo "::set-output name=status::success"
     - name: Archive
       run:  |
         cd lede
