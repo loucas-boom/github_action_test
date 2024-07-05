@@ -24,23 +24,20 @@ jobs:
             issue_number: issue_number
           });
           const issue_body = issue.data.body;
-          return {
-            issue_body: issue_body,
-            issue_number: issue_number
-          };
+          core.setOutput('issue_body', issue_body);
+          core.setOutput('issue_number', issue_number);
 
     - name: Process issue content
-      id: process_issue
       run: |
-        echo "Issue Content: ${{ steps.fetch_issue.outputs.result.issue_body }}"
-        echo "${{ steps.fetch_issue.outputs.result.issue_body }}" > issue.json
+        echo "Issue Content: ${{ steps.fetch_issue.outputs.issue_body }}"
+        echo "${{ steps.fetch_issue.outputs.issue_body }}" > issue.json
 
     - name: Parse and loop through array
       run: |
         issue_content=$(cat issue.json)
         echo "Issue Content: $issue_content"
         hub_mirror=$(echo "$issue_content" | jq -r '.["hub-mirror"][]')
-        
+
         for item in $hub_mirror; do
           echo "Processing item: $item"
           # 在这里添加你要对每个 item 进行的操作
@@ -52,10 +49,10 @@ jobs:
       uses: actions/github-script@v6
       with:
         script: |
-          const issue_number = ${{ steps.fetch_issue.outputs.result.issue_number }};
+          const issue_number = "${{ steps.fetch_issue.outputs.issue_number }}";
           await github.rest.issues.update({
             owner: context.repo.owner,
             repo: context.repo.repo,
-            issue_number: issue_number,
+            issue_number: parseInt(issue_number, 10),
             state: 'closed'
           });

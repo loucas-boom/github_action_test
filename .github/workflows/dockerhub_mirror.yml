@@ -19,6 +19,6 @@ jobs:
         echo "--------------------------"
         cat /proc/meminfo
         echo "--------------------------"
-    -name: download
-      run: |
-        docker pull 
+    # -name: download
+    #   run: |
+    #     docker pull 
