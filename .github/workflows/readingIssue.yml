@@ -9,10 +9,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Check Issue Title
-      if: ${{ !contains(github.event.issue.title, 'readingIssue') }}
-      run: |
-        exit 1
     - name: Checkout repository
       uses: actions/checkout@v3
 
@@ -27,16 +23,14 @@ jobs:
             repo: context.repo.repo,
             issue_number: issue_number
           });
-          // 修正 issue_body 的 JSON 格式
-          let issue_body = issue.data.body;
-          issue_body = issue_body.replace(/(\w+):/g, '"$1":').replace(/'/g, '"');
+          const issue_body = issue.data.body;
           core.setOutput('issue_body', issue_body);
           core.setOutput('issue_number', issue_number);
 
     - name: Process issue content
       run: |
         echo "Issue Content: ${{ steps.fetch_issue.outputs.issue_body }}"
-        echo "${{ steps.fetch_issue.outputs.issue_body }}" > issue.json
+        echo '${{ steps.fetch_issue.outputs.issue_body }}' > issue.json
 
     - name: Display issue.json content
       run: |
@@ -46,7 +40,7 @@ jobs:
       run: |
         issue_content=$(cat issue.json)
         echo "Issue Content: $issue_content"
-        hub_mirror=$(echo "$issue_content" | jq -r '.["hub-mirror"][]')
+        hub_mirror=$(echo "$issue_content" | jq -r '.[]')
 
         for item in $hub_mirror; do
           echo "Processing item: $item"
