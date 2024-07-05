@@ -50,6 +50,9 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+    - name: show docker images
+      run: |
+        docker images
     - name: Close issue
       uses: actions/github-script@v6
       with:
