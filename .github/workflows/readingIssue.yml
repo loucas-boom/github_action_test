@@ -36,23 +36,30 @@ jobs:
       run: |
         cat issue.json
 
-    - name: Parse and loop through array
+    - name: Parse and pull Docker images
       run: |
         issue_content=$(cat issue.json)
         echo "Issue Content: $issue_content"
         hub_mirror=$(echo "$issue_content" | jq -r '.[]')
 
+        mkdir -p docker_images
+
         for item in $hub_mirror; do
-          echo "Processing item: $item"
-          # 在这里添加你要对每个 item 进行的操作
+          echo "Pulling Docker image: $item"
           docker pull $item
+          image_name=$(echo $item | tr '/' '-' | tr ':' '-')
+          echo "Saving Docker image to: docker_images/${image_name}.tar"
+          docker save -o docker_images/${image_name}.tar $item
         done
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: show docker images
-      run: |
-        docker images
+    - name: Upload Docker images to repository
+      uses: actions/upload-artifact@v3
+      with:
+        name: docker-images
+        path: docker_images/
+
     - name: Close issue
       uses: actions/github-script@v6
       with:
