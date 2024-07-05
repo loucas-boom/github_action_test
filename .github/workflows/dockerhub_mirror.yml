@@ -18,4 +18,7 @@ jobs:
         cat /proc/cpuinfo
         echo "--------------------------"
         cat /proc/meminfo
-        echo ${{ secrets.DOCKER_USERNAME }}
+        echo "--------------------------"
+    -name: download
+      run: |
+        docker pull 
