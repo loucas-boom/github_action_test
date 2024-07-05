@@ -3,7 +3,8 @@ name: images_mirror
 # 当新建或者修改 issues 时，触发当前 workflow
 on:
   issues:
-    types: [opened, edited]
+    # types: [opened, edited]
+    types: [opened]
 
 jobs:
   build:

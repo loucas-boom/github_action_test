@@ -2,7 +2,8 @@ name: Build lede
 # 当新建或者修改 issues 时，触发当前 workflow
 on:
   issues:
-    types: [opened, edited]
+    types: [opened]
+    # types: [opened, edited]
 env:
   REPO_URL: https://github.com/coolsnowwolf/lede
   CONFIG_FILE: .config-all
