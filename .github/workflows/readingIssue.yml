@@ -23,7 +23,9 @@ jobs:
             repo: context.repo.repo,
             issue_number: issue_number
           });
-          const issue_body = issue.data.body;
+          // 修正 issue_body 的 JSON 格式
+          let issue_body = issue.data.body;
+          issue_body = issue_body.replace(/(\w+):/g, '"$1":').replace(/'/g, '"');
           core.setOutput('issue_body', issue_body);
           core.setOutput('issue_number', issue_number);
 
