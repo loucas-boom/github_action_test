@@ -45,6 +45,7 @@ jobs:
         for item in $hub_mirror; do
           echo "Processing item: $item"
           # 在这里添加你要对每个 item 进行的操作
+          docker pull $item
         done
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
