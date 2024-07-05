@@ -9,6 +9,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Check Issue Title
+      if: ${{ !contains(github.event.issue.title, 'readingIssue') }}
+      run: |
+        exit 1
     - name: Checkout repository
       uses: actions/checkout@v3
 
