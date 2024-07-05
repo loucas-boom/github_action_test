@@ -32,6 +32,10 @@ jobs:
         echo "Issue Content: ${{ steps.fetch_issue.outputs.issue_body }}"
         echo "${{ steps.fetch_issue.outputs.issue_body }}" > issue.json
 
+    - name: Display issue.json content
+      run: |
+        cat issue.json
+
     - name: Parse and loop through array
       run: |
         issue_content=$(cat issue.json)
@@ -49,10 +53,10 @@ jobs:
       uses: actions/github-script@v6
       with:
         script: |
-          const issue_number = "${{ steps.fetch_issue.outputs.issue_number }}";
+          const issue_number = parseInt("${{ steps.fetch_issue.outputs.issue_number }}", 10);
           await github.rest.issues.update({
             owner: context.repo.owner,
             repo: context.repo.repo,
-            issue_number: parseInt(issue_number, 10),
+            issue_number: issue_number,
             state: 'closed'
           });
